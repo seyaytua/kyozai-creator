@@ -125,7 +125,8 @@ class ExamGenerator {
         body { font-family: 'Hiragino Mincho ProN', 'Yu Mincho', serif; line-height: 1.6; max-width: 210mm; margin: 0 auto; padding: 20px; }
         
         /* 表紙スタイル */
-        .cover-page { min-height: 250mm; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; border: 3px solid #000; padding: 40px; box-sizing: border-box; }
+        .cover-wrapper { min-height: 287mm; display: flex; align-items: center; justify-content: center; }
+        .cover-page { width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; border: 3px solid #000; padding: 40px; box-sizing: border-box; }
         .exam-title { font-size: 28pt; font-weight: bold; margin: 20px 0; }
         .exam-subtitle { font-size: 18pt; margin-bottom: 40px; }
         
@@ -203,6 +204,7 @@ class ExamGenerator {
         const styledNotesHtml = notesHtml.replace(/<li>/g, `<li style="${liStyle}">`);
 
         return `
+    <div class="cover-wrapper">
     <div class="cover-page">
         <h1 class="exam-title">${title}</h1>
         <div class="exam-subtitle">${subtitle}</div>
@@ -234,6 +236,7 @@ class ExamGenerator {
                 </div>
             </div>
         </div>
+    </div>
     </div>`;
     }
 
