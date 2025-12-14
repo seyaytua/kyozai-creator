@@ -451,7 +451,10 @@ Please report this to https://github.com/markedjs/marked.`,r){let n="<p>An error
                 packages: {'[+]': ['ams']},
                 macros: {
                     leqq: ['\\\\mathrel{\\\\char"2266}', 0],
-                    geqq: ['\\\\mathrel{\\\\char"2267}', 0]
+                    geqq: ['\\\\mathrel{\\\\char"2267}', 0],
+                    frac: ['\\\\dfrac{#1}{#2}', 2],
+                    int: '\\\\displaystyle\\\\intop',
+                    lim: '\\\\displaystyle\\\\mathop{\\\\rm lim}'
                 }
             },
             loader: {load: ['[tex]/ams']},
@@ -625,7 +628,10 @@ Please report this to https://github.com/markedjs/marked.`,r){let n="<p>An error
                 packages: {'[+]': ['ams']},
                 macros: {
                     leqq: ['\\\\mathrel{\\\\char"2266}', 0],
-                    geqq: ['\\\\mathrel{\\\\char"2267}', 0]
+                    geqq: ['\\\\mathrel{\\\\char"2267}', 0],
+                    frac: ['\\\\dfrac{#1}{#2}', 2],
+                    int: '\\\\displaystyle\\\\intop',
+                    lim: '\\\\displaystyle\\\\mathop{\\\\rm lim}'
                 }
             },
             loader: {load: ['[tex]/ams']},
