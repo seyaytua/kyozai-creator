@@ -58,16 +58,28 @@ class ExamGenerator {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>${title}</title>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>
         MathJax = {
             tex: {
                 inlineMath: [['$', '$']],
                 displayMath: [['$$', '$$']],
-                processEscapes: true
+                processEscapes: true,
+                packages: {'[+]': ['ams']},
+                macros: {
+                    leqq: '\\\\leqslant',
+                    geqq: '\\\\geqslant',
+                    lneqq: '\\\\lneqq',
+                    gneqq: '\\\\gneqq'
+                }
+            },
+            loader: {load: ['[tex]/ams']},
+            chtml: {
+                scale: 1.0,
+                matchFontHeight: true
             }
         };
     </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
     <style>
         @media print {
             .page-break { 

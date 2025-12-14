@@ -1,6 +1,7 @@
 import { createHashRouter, RouterProvider } from 'react-router-dom';
 import { MainLayout } from './components/Layout';
 import { Home, ExamEditor, WorksheetEditor, LessonPlanEditor, Settings } from './pages';
+import { HelpPage } from './pages/HelpPage';
 
 // GitHub PagesではHashRouterを使用（クライアントサイドルーティング用）
 const router = createHashRouter([
@@ -36,6 +37,10 @@ const router = createHashRouter([
       {
         path: "settings",
         element: <Settings />,
+      },
+      {
+        path: "help",
+        element: <HelpPage />,
       },
     ],
   },

@@ -1,8 +1,6 @@
 import { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { Home, FileText, ClipboardList, BookOpen, FolderOpen, Settings, Plus } from 'lucide-react';
-import { openYamlFile } from '../../utils/fileUtils';
-import { addRecentProject } from '../../utils/recentProjects';
+import { Home, FileText, ClipboardList, BookOpen, Settings, Plus, HelpCircle } from 'lucide-react';
 import { NewFileDialog } from '../NewFileDialog';
 
 type FileType = 'exam' | 'worksheet' | 'lesson-plan';
@@ -18,32 +16,6 @@ export function Sidebar() {
     const navigate = useNavigate();
     const [dialogOpen, setDialogOpen] = useState(false);
     const [dialogType, setDialogType] = useState<FileType>('exam');
-
-    const handleOpenFile = async () => {
-        const result = await openYamlFile();
-        if (result) {
-            // ファイル内容からタイプを推測
-            const content = result.content.toLowerCase();
-            let type: FileType = 'exam';
-
-            if (content.includes('大問') || content.includes('試験時間') || content.includes('定期考査')) {
-                type = 'exam';
-            } else if (content.includes('問題:') && !content.includes('大問')) {
-                type = 'worksheet';
-            } else if (content.includes('展開:') || content.includes('本時の目標') || content.includes('指導案')) {
-                type = 'lesson-plan';
-            }
-
-            // 最近のプロジェクトに追加
-            addRecentProject({
-                filename: result.filename,
-                type,
-                lastOpened: new Date().toISOString()
-            });
-
-            navigate(`/${type}`);
-        }
-    };
 
     const handleNewFile = (type: FileType) => {
         setDialogType(type);
@@ -93,13 +65,18 @@ export function Sidebar() {
                     ))}
 
                     <div className="pt-4 mt-4 border-t border-[var(--color-border)]">
-                        <button
-                            onClick={handleOpenFile}
-                            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-[var(--color-text-muted)] hover:bg-[var(--color-surface-hover)] hover:text-[var(--color-text)] transition-all duration-200"
+                        <NavLink
+                            to="/help"
+                            className={({ isActive }) =>
+                                `w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200 ${isActive
+                                    ? 'bg-[var(--color-primary)] text-white'
+                                    : 'text-[var(--color-text-muted)] hover:bg-[var(--color-surface-hover)] hover:text-[var(--color-text)]'
+                                }`
+                            }
                         >
-                            <FolderOpen size={20} />
-                            <span>開く</span>
-                        </button>
+                            <HelpCircle size={20} />
+                            <span>使い方</span>
+                        </NavLink>
                     </div>
                 </nav>
 
