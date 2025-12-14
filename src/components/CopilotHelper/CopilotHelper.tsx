@@ -8,6 +8,7 @@ interface ConditionFields {
   範囲: string;
   難易度: string;
   試験時間: string;
+  デジタルツール: string;
   その他: string;
 }
 
@@ -17,6 +18,7 @@ const defaultConditions: Record<MaterialType, ConditionFields> = {
     範囲: '',
     難易度: '基本4割、標準4割、発展2割',
     試験時間: '50分',
+    デジタルツール: '',
     その他: '',
   },
   worksheet: {
@@ -24,6 +26,7 @@ const defaultConditions: Record<MaterialType, ConditionFields> = {
     範囲: '',
     難易度: '基本・標準・発展の3段階',
     試験時間: '',
+    デジタルツール: '',
     その他: 'A4で1〜2枚',
   },
   'lesson-plan': {
@@ -31,9 +34,11 @@ const defaultConditions: Record<MaterialType, ConditionFields> = {
     範囲: '',
     難易度: '',
     試験時間: '50分',
+    デジタルツール: 'デジタル教科書を使用',
     その他: '',
   },
 };
+
 
 const getPromptTemplate = (type: MaterialType): string => {
   switch (type) {
@@ -321,7 +326,8 @@ const buildPrompt = (type: MaterialType, conditions: ConditionFields): string =>
   if (conditions.科目) conditionLines.push(`- 科目：${conditions.科目}`);
   if (conditions.範囲) conditionLines.push(`- 範囲：${conditions.範囲}`);
   if (conditions.難易度) conditionLines.push(`- 難易度バランス：${conditions.難易度}`);
-  if (conditions.試験時間) conditionLines.push(`- 試験時間：${conditions.試験時間}`);
+  if (conditions.試験時間) conditionLines.push(`- 授業時間：${conditions.試験時間}`);
+  if (conditions.デジタルツール) conditionLines.push(`- デジタルツール：${conditions.デジタルツール}`);
   if (conditions.その他) conditionLines.push(`- ${conditions.その他}`);
 
   const conditionsText = conditionLines.length > 0
@@ -367,12 +373,14 @@ export function CopilotHelper({ type }: CopilotHelperProps) {
     範囲: '範囲・単元',
     難易度: '難易度バランス',
     試験時間: type === 'lesson-plan' ? '授業時間' : '試験時間',
+    デジタルツール: 'デジタルツール',
     その他: 'その他の条件',
   };
 
   const showField = (field: keyof ConditionFields): boolean => {
     if (type === 'lesson-plan' && field === '難易度') return false;
     if (type === 'worksheet' && field === '試験時間') return false;
+    if (field === 'デジタルツール' && type !== 'lesson-plan') return false;
     return true;
   };
 

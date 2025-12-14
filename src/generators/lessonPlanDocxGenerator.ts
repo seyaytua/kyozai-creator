@@ -150,10 +150,19 @@ class LessonPlanDocxGenerator {
         // 板書計画
         if (d.板書計画) {
             children.push(this.createSectionHeading('７　板書計画'));
-            children.push(new Paragraph({
-                text: d.板書計画,
-                spacing: { after: 200 },
-            }));
+            // 複数行を個別の段落として処理（等幅フォント風に表示）
+            const lines = String(d.板書計画).split('\n');
+            lines.forEach(line => {
+                children.push(new Paragraph({
+                    children: [new TextRun({
+                        text: line || ' ', // 空行も保持
+                        size: 20,
+                        font: 'Courier New', // 等幅フォント
+                    })],
+                    spacing: { after: 0, before: 0, line: 240 }, // 行間を詰める
+                }));
+            });
+            children.push(new Paragraph({ text: '', spacing: { after: 200 } }));
         }
 
         // デジタル教科書活用
