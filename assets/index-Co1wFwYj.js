@@ -450,10 +450,8 @@ Please report this to https://github.com/markedjs/marked.`,r){let n="<p>An error
                 processEscapes: true,
                 packages: {'[+]': ['ams']},
                 macros: {
-                    leqq: '\\\\leqslant',
-                    geqq: '\\\\geqslant',
-                    lneqq: '\\\\lneqq',
-                    gneqq: '\\\\gneqq'
+                    leqq: ['\\\\mathrel{\\\\char"2266}', 0],
+                    geqq: ['\\\\mathrel{\\\\char"2267}', 0]
                 }
             },
             loader: {load: ['[tex]/ams']},
@@ -626,10 +624,8 @@ Please report this to https://github.com/markedjs/marked.`,r){let n="<p>An error
                 processEscapes: true,
                 packages: {'[+]': ['ams']},
                 macros: {
-                    leqq: '\\\\leqslant',
-                    geqq: '\\\\geqslant',
-                    lneqq: '\\\\lneqq',
-                    gneqq: '\\\\gneqq'
+                    leqq: ['\\\\mathrel{\\\\char"2266}', 0],
+                    geqq: ['\\\\mathrel{\\\\char"2267}', 0]
                 }
             },
             loader: {load: ['[tex]/ams']},
