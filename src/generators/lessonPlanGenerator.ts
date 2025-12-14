@@ -136,8 +136,15 @@ class LessonPlanGenerator {
 
     private createGoals(): string {
         const d = this.data;
-        const goals = d.本時の目標 || d.目標 || [];
-        const goalsHtml = goals.filter(g => g).map(g => `<li>${g}</li>`).join('\n');
+        let goals = d.本時の目標 || d.目標 || [];
+
+        // オブジェクト形式の場合は値を配列に変換
+        if (goals && !Array.isArray(goals)) {
+            goals = Object.values(goals as Record<string, string>);
+        }
+
+        const goalsArray = Array.isArray(goals) ? goals : [];
+        const goalsHtml = goalsArray.filter(g => g).map(g => `<li>${g}</li>`).join('\n');
 
         return `
     <h2>２　本時の目標</h2>
@@ -162,12 +169,14 @@ class LessonPlanGenerator {
 
             // 学習内容・活動
             const activities: string[] = [];
-            for (const c of (phase.学習内容 || [])) {
+            const contents = Array.isArray(phase.学習内容) ? phase.学習内容 : [];
+            for (const c of contents) {
                 if (c) {
                     activities.push(`<div class="activity"><span class="activity-content">○ ${c}</span></div>`);
                 }
             }
-            for (const a of (phase.学習活動 || [])) {
+            const actions = Array.isArray(phase.学習活動) ? phase.学習活動 : [];
+            for (const a of actions) {
                 if (a) {
                     activities.push(`<div class="activity"><span class="activity-action">・ ${a}</span></div>`);
                 }
@@ -175,8 +184,8 @@ class LessonPlanGenerator {
             const activitiesHtml = activities.join('\n');
 
             // 留意点
-            const notes = phase.留意点 || [];
-            const notesHtml = notes.filter(n => n).map(n => `・${n}`).join('\n');
+            const notes = Array.isArray(phase.留意点) ? phase.留意点 : [];
+            const notesHtml = notes.filter(n => n).map(n => `・${n}`).join('<br>');
 
             rowsHtml += `
         <tr>
@@ -200,18 +209,32 @@ class LessonPlanGenerator {
 
     private createEvaluation(): string {
         const d = this.data;
-        const evaluations = d.評価 || d.本時の評価 || [];
+        let evaluations = d.評価 || d.本時の評価;
 
-        if (!evaluations || evaluations.length === 0) {
+        if (!evaluations) {
             return '';
         }
 
-        const evalsHtml = evaluations.filter(e => e).map(e => {
-            const text = typeof e === 'object' && e !== null && '規準' in e
-                ? (e as EvaluationItem).規準
-                : String(e);
-            return `<li>${text}</li>`;
-        }).join('\n');
+        let evalsHtml = '';
+
+        // オブジェクト形式の場合（知識・技能: "..." など）
+        if (evaluations && typeof evaluations === 'object' && !Array.isArray(evaluations)) {
+            const entries = Object.entries(evaluations as Record<string, string>);
+            evalsHtml = entries.map(([key, value]) => `<li><strong>${key}：</strong>${value}</li>`).join('\n');
+        }
+        // 配列形式の場合
+        else if (Array.isArray(evaluations)) {
+            evalsHtml = evaluations.filter(e => e).map(e => {
+                const text = typeof e === 'object' && e !== null && '規準' in e
+                    ? (e as EvaluationItem).規準
+                    : String(e);
+                return `<li>${text}</li>`;
+            }).join('\n');
+        }
+
+        if (!evalsHtml) {
+            return '';
+        }
 
         return `
     <h2>４　本時の評価</h2>
