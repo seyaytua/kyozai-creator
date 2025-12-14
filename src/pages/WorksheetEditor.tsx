@@ -33,7 +33,7 @@ export function WorksheetEditor() {
     const [apiConnected, setApiConnected] = useState<boolean | null>(null);
     const [filename, setFilename] = useState<string>(urlFilename || '新規プリント.yaml');
     const [saved, setSaved] = useState(false);
-    const [editorMode, setEditorMode] = useState<'yaml' | 'form'>('form');
+    const [editorMode, setEditorMode] = useState<'yaml' | 'form'>('yaml');
     const initialYamlRef = useRef(emptyYaml);
     const hasChanges = yaml !== initialYamlRef.current;
 
