@@ -96,14 +96,15 @@ Please change the parent <Route path="${A}"> to <Route path="${A==="/"?"*":`${A}
 `),A.改ページ&&(T+=`    改ページ: true
 `))}),T};return v.jsxs("div",{className:"h-full overflow-y-auto p-4 space-y-6",children:[v.jsxs("section",{className:"space-y-3",children:[v.jsx("h3",{className:"font-semibold text-sm text-[var(--color-text-muted)] uppercase tracking-wide",children:"基本情報"}),v.jsxs("div",{className:"grid grid-cols-2 gap-3",children:[v.jsxs("div",{children:[v.jsx("label",{className:"block text-xs text-[var(--color-text-muted)] mb-1",children:"タイトル"}),v.jsx("input",{type:"text",value:n.タイトル,onChange:k=>r("タイトル",k.target.value),className:"w-full px-3 py-2 rounded-lg bg-[var(--color-bg)] border border-[var(--color-border)] focus:border-[var(--color-primary)] focus:outline-none text-sm"})]}),v.jsxs("div",{children:[v.jsx("label",{className:"block text-xs text-[var(--color-text-muted)] mb-1",children:"サブタイトル"}),v.jsx("input",{type:"text",value:n.サブタイトル,onChange:k=>r("サブタイトル",k.target.value),className:"w-full px-3 py-2 rounded-lg bg-[var(--color-bg)] border border-[var(--color-border)] focus:border-[var(--color-primary)] focus:outline-none text-sm",placeholder:"例: 4-4 演習プリント"})]})]}),v.jsxs("div",{className:"flex items-center gap-2",children:[v.jsx("input",{type:"checkbox",id:"createAnswer",checked:n.解答を作成,onChange:k=>r("解答を作成",k.target.checked),className:"w-4 h-4"}),v.jsx("label",{htmlFor:"createAnswer",className:"text-sm cursor-pointer",children:"解答ページを作成する"})]})]}),v.jsxs("section",{className:"space-y-4",children:[v.jsxs("div",{className:"flex items-center justify-between",children:[v.jsx("h3",{className:"font-semibold text-sm text-[var(--color-text-muted)] uppercase tracking-wide",children:"問題"}),v.jsxs("div",{className:"flex gap-2",children:[v.jsxs("button",{onClick:s,className:"flex items-center gap-1 text-xs text-[var(--color-text-muted)] hover:text-[var(--color-text)] px-2 py-1 rounded bg-[var(--color-surface-hover)]",children:[v.jsx(rs,{size:12})," 見出し"]}),v.jsxs("button",{onClick:o,className:"flex items-center gap-1 text-xs text-[var(--color-primary)] hover:underline",children:[v.jsx(rs,{size:14})," 問題を追加"]})]})]}),n.問題.map((k,O)=>v.jsx("div",{className:"bg-[var(--color-surface-hover)] rounded-xl p-4 space-y-3",children:k.type==="header"?v.jsxs("div",{className:"flex items-center gap-2",children:[v.jsxs("div",{className:"flex flex-col",children:[v.jsx("button",{onClick:()=>d(O,"up"),disabled:O===0,className:"p-0.5 rounded hover:bg-[var(--color-border)] text-[var(--color-text-muted)] disabled:opacity-30",children:v.jsx(CS,{size:14})}),v.jsx("button",{onClick:()=>d(O,"down"),disabled:O===n.問題.length-1,className:"p-0.5 rounded hover:bg-[var(--color-border)] text-[var(--color-text-muted)] disabled:opacity-30",children:v.jsx(OS,{size:14})})]}),v.jsx("span",{className:"text-xs text-[var(--color-text-muted)]",children:"見出し"}),v.jsx("input",{type:"text",value:k.text||"",onChange:T=>u(O,{text:T.target.value}),className:"flex-1 px-3 py-2 rounded-lg bg-[var(--color-bg)] border border-[var(--color-border)] focus:border-[var(--color-primary)] focus:outline-none text-sm font-medium",placeholder:"例: 基本問題"}),v.jsxs("label",{className:"flex items-center gap-1 text-xs text-orange-400 cursor-pointer",children:[v.jsx("input",{type:"checkbox",checked:k.改ページ||!1,onChange:T=>u(O,{改ページ:T.target.checked}),className:"rounded"}),"改ページ"]}),v.jsx("button",{onClick:()=>f(O),className:"p-1 rounded hover:bg-red-500/10 text-[var(--color-text-muted)] hover:text-red-400",children:v.jsx(ls,{size:16})})]}):v.jsxs(v.Fragment,{children:[v.jsxs("div",{className:"flex items-center justify-between",children:[v.jsxs("div",{className:"flex items-center gap-2",children:[v.jsxs("div",{className:"flex flex-col",children:[v.jsx("button",{onClick:()=>d(O,"up"),disabled:O===0,className:"p-0.5 rounded hover:bg-[var(--color-border)] text-[var(--color-text-muted)] disabled:opacity-30",children:v.jsx(CS,{size:14})}),v.jsx("button",{onClick:()=>d(O,"down"),disabled:O===n.問題.length-1,className:"p-0.5 rounded hover:bg-[var(--color-border)] text-[var(--color-text-muted)] disabled:opacity-30",children:v.jsx(OS,{size:14})})]}),v.jsxs("h4",{className:"font-medium",children:["問題 ",k.番号]}),v.jsxs("label",{className:"flex items-center gap-1 text-xs text-orange-400 cursor-pointer",children:[v.jsx("input",{type:"checkbox",checked:k.改ページ||!1,onChange:T=>u(O,{改ページ:T.target.checked}),className:"rounded"}),"改ページ"]})]}),v.jsx("button",{onClick:()=>f(O),className:"p-1 rounded hover:bg-red-500/10 text-[var(--color-text-muted)] hover:text-red-400",children:v.jsx(ls,{size:16})})]}),v.jsxs("div",{children:[v.jsxs("div",{className:"flex items-center justify-between mb-1",children:[v.jsx("label",{className:"text-xs text-[var(--color-text-muted)]",children:"問題文"}),v.jsx(O0,{onInsert:T=>u(O,{本文:(k.本文||"")+T})})]}),v.jsx("textarea",{value:k.本文||"",onChange:T=>u(O,{本文:T.target.value}),rows:2,className:"w-full px-3 py-2 rounded-lg bg-[var(--color-bg)] border border-[var(--color-border)] focus:border-[var(--color-primary)] focus:outline-none text-sm resize-none",placeholder:"問題文を入力... (数式は $...$ で囲む)"})]}),v.jsxs("div",{className:"grid grid-cols-3 gap-3",children:[v.jsxs("div",{children:[v.jsx("label",{className:"block text-xs text-[var(--color-text-muted)] mb-1",children:"配点"}),v.jsx("input",{type:"number",value:k.配点||10,onChange:T=>u(O,{配点:Number(T.target.value)}),className:"w-full px-3 py-2 rounded-lg bg-[var(--color-bg)] border border-[var(--color-border)] focus:border-[var(--color-primary)] focus:outline-none text-sm"})]}),v.jsxs("div",{children:[v.jsx("label",{className:"block text-xs text-[var(--color-text-muted)] mb-1",children:"解答スペース（行）"}),v.jsx("input",{type:"number",value:k.スペース||6,onChange:T=>u(O,{スペース:Number(T.target.value)}),className:"w-full px-3 py-2 rounded-lg bg-[var(--color-bg)] border border-[var(--color-border)] focus:border-[var(--color-primary)] focus:outline-none text-sm"})]}),v.jsxs("div",{children:[v.jsx("label",{className:"block text-xs text-[var(--color-text-muted)] mb-1",children:"解答"}),v.jsx("input",{type:"text",value:typeof k.解答=="string"?k.解答:"",onChange:T=>u(O,{解答:T.target.value}),className:"w-full px-3 py-2 rounded-lg bg-[var(--color-bg)] border border-[var(--color-border)] focus:border-[var(--color-primary)] focus:outline-none text-sm"})]})]}),v.jsxs("div",{className:"ml-4 space-y-2",children:[v.jsxs("div",{className:"flex items-center justify-between",children:[v.jsx("span",{className:"text-xs text-[var(--color-text-muted)]",children:"小問（オプション）"}),v.jsxs("button",{onClick:()=>p(O),className:"flex items-center gap-1 text-xs text-[var(--color-primary)] hover:underline",children:[v.jsx(rs,{size:12})," 追加"]})]}),(k.小問||[]).map((T,A)=>v.jsxs("div",{className:"flex items-center gap-2",children:[v.jsxs("span",{className:"text-xs text-[var(--color-text-muted)]",children:["(",A+1,")"]}),v.jsx("input",{type:"text",value:T,onChange:R=>g(O,A,R.target.value),className:"flex-1 px-2 py-1 rounded bg-[var(--color-bg)] border border-[var(--color-border)] focus:border-[var(--color-primary)] focus:outline-none text-sm",placeholder:"小問の内容..."}),v.jsx(O0,{onInsert:R=>g(O,A,T+R)}),v.jsx("button",{onClick:()=>x(O,A),className:"p-1 rounded hover:bg-red-500/10 text-[var(--color-text-muted)] hover:text-red-400",children:v.jsx(ls,{size:14})})]},A))]}),v.jsxs("div",{children:[v.jsx("label",{className:"block text-xs text-[var(--color-text-muted)] mb-1",children:"解説（オプション）"}),v.jsx("input",{type:"text",value:k.解説||"",onChange:T=>u(O,{解説:T.target.value}),className:"w-full px-3 py-2 rounded-lg bg-[var(--color-bg)] border border-[var(--color-border)] focus:border-[var(--color-primary)] focus:outline-none text-sm",placeholder:"解説を入力..."})]})]})},O))]})]})}function Qy({html:t,loading:e}){const n=L.useRef(null);return L.useEffect(()=>{if(n.current&&t){const i=n.current.contentDocument;i&&(i.open(),i.write(t),i.close())}},[t]),v.jsxs("div",{className:"h-full bg-white rounded-xl overflow-hidden shadow-lg relative",children:[v.jsxs("div",{className:"absolute top-0 left-0 right-0 bg-gradient-to-b from-gray-100 to-transparent h-8 z-10 flex items-center px-4",children:[v.jsxs("div",{className:"flex gap-1.5",children:[v.jsx("div",{className:"w-3 h-3 rounded-full bg-red-400"}),v.jsx("div",{className:"w-3 h-3 rounded-full bg-yellow-400"}),v.jsx("div",{className:"w-3 h-3 rounded-full bg-green-400"})]}),v.jsx("span",{className:"ml-4 text-xs text-gray-500",children:"プレビュー"})]}),e?v.jsxs("div",{className:"h-full flex items-center justify-center text-gray-400",children:[v.jsx($D,{className:"animate-spin mr-2",size:24}),v.jsx("span",{children:"生成中..."})]}):t?v.jsx("iframe",{ref:n,className:"w-full h-full border-0 pt-8",title:"Preview",sandbox:"allow-same-origin"}):v.jsx("div",{className:"h-full flex items-center justify-center text-gray-400 pt-8",children:v.jsxs("div",{className:"text-center",children:[v.jsx("p",{className:"text-4xl mb-4",children:"📄"}),v.jsx("p",{children:"YAMLを入力するとプレビューが表示されます"})]})})]})}const T9={exam:{科目:"",範囲:"",難易度:"基本4割、標準4割、発展2割",試験時間:"50分",その他:""},worksheet:{科目:"",範囲:"",難易度:"基本・標準・発展の3段階",試験時間:"",その他:"A4で1〜2枚"},"lesson-plan":{科目:"",範囲:"",難易度:"",試験時間:"50分",その他:""}},M9=t=>{switch(t){case"exam":return`# 定期考査作成プロンプト
 
-## Step 1: 資料のアップロード
-まず、以下のような資料をアップロードしてください：
-- 教科書の該当ページ（写真またはPDF）
-- 授業ノート
-- 過去問や問題集
+## 重要な出力形式
+**回答は必ずYAMLコードブロックのみを出力してください。**
+- Markdown表や説明文は一切不要です
+- 以下のYAML形式をそのまま使用してください
 
-## Step 2: 問題作成の依頼
-資料をアップロードした後、**必ず以下のYAML形式のまま**定期考査を作成してください：
+## Step 1: 資料のアップロード
+教科書の該当ページ等をアップロードしてください。
+
+## Step 2: 以下のYAML形式のみを出力
 
 \`\`\`yaml
 タイトル: "第○回定期考査"
@@ -174,18 +175,20 @@ Please change the parent <Route path="${A}"> to <Route path="${A==="/"?"*":`${A}
 \`\`\`
 
 **重要：上記のYAML形式を崩さずに、問題内容だけを置き換えてください。**
+**⚠️ 繰り返し：YAMLコードブロックのみを出力してください。表や説明文は不要です。**
 
 **作成条件：**
 {{条件}}`;case"worksheet":return`# プリント作成プロンプト
 
-## Step 1: 資料のアップロード
-まず、以下のような資料をアップロードしてください：
-- 教科書の該当ページ（写真またはPDF）
-- 授業ノート
-- 参考にしたい問題集
+## 重要な出力形式
+**回答は必ずYAMLコードブロックのみを出力してください。**
+- Markdown表や説明文は一切不要です
+- 以下のYAML形式をそのまま使用してください
 
-## Step 2: プリント作成の依頼
-資料をアップロードした後、**必ず以下のYAML形式のまま**プリントを作成してください：
+## Step 1: 資料のアップロード
+教科書の該当ページ等をアップロードしてください。
+
+## Step 2: 以下のYAML形式のみを出力
 
 \`\`\`yaml
 タイトル: "{{科目}} {{範囲}}"
@@ -239,18 +242,21 @@ Please change the parent <Route path="${A}"> to <Route path="${A==="/"?"*":`${A}
 \`\`\`
 
 **重要：上記のYAML形式を崩さずに、問題内容だけを置き換えてください。**
+**⚠️ 繰り返し：YAMLコードブロックのみを出力してください。表や説明文は不要です。**
 
 **作成条件：**
 {{条件}}`;case"lesson-plan":return`# 指導案作成プロンプト
 
-## Step 1: 資料のアップロード
-まず、以下のような資料をアップロードしてください：
-- 教科書の該当ページ（写真またはPDF）
-- 学習指導要領の該当部分
-- 参考にしたい指導案
+## 重要な出力形式
+**回答は必ずYAMLコードブロックのみを出力してください。**
+- Markdown表、箇条書き、説明文は一切不要です
+- 以下のYAML形式をそのまま使用し、内容を埋めてください
+- YAMLコードブロック以外のテキストは出力しないでください
 
-## Step 2: 指導案作成の依頼
-資料をアップロードした後、以下のYAML形式で指導案を作成してください：
+## Step 1: 資料のアップロード
+まず、教科書の該当ページ等をアップロードしてください。
+
+## Step 2: 以下のYAML形式のみを出力
 
 \`\`\`yaml
 教科: "{{科目}}"
@@ -300,6 +306,8 @@ Please change the parent <Route path="${A}"> to <Route path="${A==="/"?"*":`${A}
   - "[評価規準1]"
   - "[評価規準2]"
 \`\`\`
+
+**⚠️ 繰り返し：YAMLコードブロックのみを出力してください。表や説明文は不要です。**
 
 **作成条件：**
 - 授業時間：{{試験時間}}
