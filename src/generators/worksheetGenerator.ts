@@ -60,8 +60,8 @@ class WorksheetGenerator {
                 processEscapes: true,
                 packages: {'[+]': ['ams']},
                 macros: {
-                    leqq: ['\\\\mathrel{\\\\char"2266}', 0],
-                    geqq: ['\\\\mathrel{\\\\char"2267}', 0],
+                    leqq: '≦',
+                    geqq: '≧',
                     frac: ['\\\\dfrac{#1}{#2}', 2],
                     int: '\\\\displaystyle\\\\intop',
                     lim: '\\\\displaystyle\\\\mathop{\\\\rm lim}'
