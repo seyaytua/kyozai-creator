@@ -125,7 +125,7 @@ class ExamGenerator {
         body { font-family: 'Hiragino Mincho ProN', 'Yu Mincho', serif; line-height: 1.6; max-width: 210mm; margin: 0 auto; padding: 20px; }
         
         /* 表紙スタイル */
-        .cover-wrapper { min-height: 270mm; display: flex; align-items: flex-start; justify-content: center; padding-top: 15mm; }
+        .cover-wrapper { min-height: 270mm; display: flex; align-items: flex-start; justify-content: center; padding-top: 30mm; }
         .cover-page { width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; border: 3px solid #000; padding: 40px; box-sizing: border-box; }
         .exam-title { font-size: 28pt; font-weight: bold; margin: 20px 0; }
         .exam-subtitle { font-size: 18pt; margin-bottom: 40px; }
