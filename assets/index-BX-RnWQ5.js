@@ -509,7 +509,8 @@ Please report this to https://github.com/markedjs/marked.`,r){let n="<p>An error
         body { font-family: 'Hiragino Mincho ProN', 'Yu Mincho', serif; line-height: 1.6; max-width: 210mm; margin: 0 auto; padding: 20px; }
         
         /* 表紙スタイル */
-        .cover-page { min-height: 250mm; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; border: 3px solid #000; padding: 40px; box-sizing: border-box; }
+        .cover-wrapper { min-height: 287mm; display: flex; align-items: center; justify-content: center; }
+        .cover-page { width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; border: 3px solid #000; padding: 40px; box-sizing: border-box; }
         .exam-title { font-size: 28pt; font-weight: bold; margin: 20px 0; }
         .exam-subtitle { font-size: 18pt; margin-bottom: 40px; }
         
@@ -558,6 +559,7 @@ Please report this to https://github.com/markedjs/marked.`,r){let n="<p>An error
 </body>
 </html>`}createCover(){const e=this.data.注意事項||[],t=e.map(f=>`<li>${f}</li>`).join(`
 `),n=e.length;let i,s;n>=10?(i="font-size: 9pt; line-height: 1.2;",s="margin-bottom: 2px;"):n>=8?(i="font-size: 9.5pt; line-height: 1.3;",s="margin-bottom: 3px;"):n>=6?(i="font-size: 10pt; line-height: 1.4;",s="margin-bottom: 5px;"):(i="font-size: 11pt; line-height: 1.6;",s="margin-bottom: 10px;");const l=this.data.タイトル||this.data.試験名||"",c=this.data.サブタイトル||"",u=t.replace(/<li>/g,`<li style="${s}">`);return`
+    <div class="cover-wrapper">
     <div class="cover-page">
         <h1 class="exam-title">${l}</h1>
         <div class="exam-subtitle">${c}</div>
@@ -589,6 +591,7 @@ Please report this to https://github.com/markedjs/marked.`,r){let n="<p>An error
                 </div>
             </div>
         </div>
+    </div>
     </div>`}createProblems(){let e="";const t=this.data.大問||[];for(const n of t){const i=n.改ページ?' style="page-break-before: always; break-before: page;"':"";let s="";n.必須?s="必答":n.区分&&(s=n.区分);const l=s&&s!=="記載なし"?`<span class="problem-type">${s}</span>`:"",c=n.配点?`<span class="problem-score">（配点 ${n.配点}点）</span>`:"",u=n.タイトル||n.番号||"",f=n.番号||"";e+=`
     <div class="problem-page"${i}>
         <div class="problem-header">
