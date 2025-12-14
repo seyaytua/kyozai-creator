@@ -571,7 +571,8 @@ Please report this to https://github.com/markedjs/marked.`,r){let n="<p>An error
             </div>
             ${u}
         </div>
-        <div class="problem-content">`;const d=n.小問||n.問題||[];for(const m of d){let g="",y="",b="";typeof m=="object"&&m!==null?(m.改ページ&&(g=' style="page-break-before: always; break-before: page;"'),y=m.本文||"",b=m.番号||""):y=String(m);const w=_t.parse(y);e+=`
+        <div class="problem-content">`;const d=n.小問||n.問題||[];for(const m of d){let g="",y="",b="";typeof m=="object"&&m!==null?(m.改ページ&&(g=' style="page-break-before: always; break-before: page;"'),y=m.本文||"",b=m.番号||""):y=String(m),y=y.replace(/\\n/g,`
+`);const w=_t.parse(y);e+=`
             <div class="problem-item"${g}>
                 <div class="problem-item-num">${b}</div>
                 <div class="problem-item-body">${w}</div>
@@ -579,7 +580,9 @@ Please report this to https://github.com/markedjs/marked.`,r){let n="<p>An error
         </div>
     </div>`}return e}createAnswers(){let e=`
     <div class="answer-page">
-        <h2>解答・解説</h2>`;const t=this.data.大問||[];for(const n of t){const i=n.タイトル||n.番号||"",s=n.番号||"";e+=`<h3>${s}. ${i}</h3>`;const l=n.小問||n.問題||[];for(const u of l){if(typeof u!="object"||u===null)continue;const c=u.番号||"",h=u.解答||"（解答なし）",d=u.解説||"",m=d?`<div class="answer-explanation"><strong>【解説】</strong><br>${_t.parse(d)}</div>`:"";e+=`
+        <h2>解答・解説</h2>`;const t=this.data.大問||[];for(const n of t){const i=n.タイトル||n.番号||"",s=n.番号||"";e+=`<h3>${s}. ${i}</h3>`;const l=n.小問||n.問題||[];for(const u of l){if(typeof u!="object"||u===null)continue;const c=u.番号||"",h=(u.解答||"（解答なし）").replace(/\\n/g,`
+`),d=(u.解説||"").replace(/\\n/g,`
+`),m=d?`<div class="answer-explanation"><strong>【解説】</strong><br>${_t.parse(d)}</div>`:"";e+=`
             <div class="answer-item">
                 <div><strong>${c}</strong> <span class="answer-correct">${h}</span></div>
                 ${m}
