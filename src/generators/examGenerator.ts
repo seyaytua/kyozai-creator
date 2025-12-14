@@ -281,6 +281,9 @@ class ExamGenerator {
                     body = String(sub);
                 }
 
+                // リテラルの \n を実際の改行に変換
+                body = body.replace(/\\n/g, '\n');
+
                 const bodyHtml = marked.parse(body) as string;
                 html += `
             <div class="problem-item"${sbStyle}>
@@ -313,8 +316,9 @@ class ExamGenerator {
                 if (typeof sub !== 'object' || sub === null) continue;
 
                 const num = sub.番号 || '';
-                const ans = sub.解答 || '（解答なし）';
-                const exp = sub.解説 || '';
+                // リテラルの \n を実際の改行に変換
+                const ans = (sub.解答 || '（解答なし）').replace(/\\n/g, '\n');
+                const exp = (sub.解説 || '').replace(/\\n/g, '\n');
 
                 const expHtml = exp
                     ? `<div class="answer-explanation"><strong>【解説】</strong><br>${marked.parse(exp)}</div>`
