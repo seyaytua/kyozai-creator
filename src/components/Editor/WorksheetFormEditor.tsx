@@ -40,19 +40,33 @@ export function WorksheetFormEditor({ yaml: yamlProp, onYamlChange, initialData 
         ],
     });
     const isInternalUpdate = useRef(false);
-    const lastYamlProp = useRef(yamlProp);
+    const lastYamlProp = useRef<string | undefined>(undefined);
+    const isMounted = useRef(false);
 
     // Parse incoming YAML and sync to form state
     useEffect(() => {
-        if (!yamlProp || isInternalUpdate.current || yamlProp === lastYamlProp.current) {
+        // Skip if this is an internal update
+        if (isInternalUpdate.current) {
             isInternalUpdate.current = false;
             return;
         }
+
+        // Skip if YAML hasn't changed
+        if (yamlProp === lastYamlProp.current) {
+            return;
+        }
+
+        // Skip empty YAML except on initial mount with existing data
+        if (!yamlProp) {
+            lastYamlProp.current = yamlProp;
+            return;
+        }
+
         lastYamlProp.current = yamlProp;
 
         try {
             const parsed = yaml.load(yamlProp) as Partial<WorksheetData>;
-            if (parsed) {
+            if (parsed && parsed.問題 && parsed.問題.length > 0) {
                 setData({
                     タイトル: parsed.タイトル || '演習プリント',
                     サブタイトル: parsed.サブタイトル || '',
@@ -66,6 +80,8 @@ export function WorksheetFormEditor({ yaml: yamlProp, onYamlChange, initialData 
         } catch (e) {
             // Ignore parse errors
         }
+
+        isMounted.current = true;
     }, [yamlProp]);
 
     const updateField = <K extends keyof WorksheetData>(field: K, value: WorksheetData[K]) => {
