@@ -224,7 +224,7 @@ export function WorksheetEditor() {
                             </div>
                         </>
                     ) : (
-                        <WorksheetFormEditor onYamlChange={setYaml} />
+                        <WorksheetFormEditor yaml={yaml} onYamlChange={setYaml} />
                     )}
                 </div>
 

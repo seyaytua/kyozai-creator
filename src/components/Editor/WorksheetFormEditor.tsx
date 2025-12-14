@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Plus, Trash2, ChevronUp, ChevronDown } from 'lucide-react';
 import { MathInputButton } from './MathEditor';
+import yaml from 'js-yaml';
 
 interface WorksheetData {
     タイトル: string;
@@ -23,11 +24,12 @@ interface WorksheetItem {
 }
 
 interface WorksheetFormEditorProps {
+    yaml?: string;
     onYamlChange: (yaml: string) => void;
     initialData?: Partial<WorksheetData>;
 }
 
-export function WorksheetFormEditor({ onYamlChange, initialData }: WorksheetFormEditorProps) {
+export function WorksheetFormEditor({ yaml: yamlProp, onYamlChange, initialData }: WorksheetFormEditorProps) {
     const [data, setData] = useState<WorksheetData>({
         タイトル: initialData?.タイトル || '数学C 演習プリント',
         サブタイトル: initialData?.サブタイトル || '',
@@ -37,6 +39,34 @@ export function WorksheetFormEditor({ onYamlChange, initialData }: WorksheetForm
             { 番号: 1, 本文: '', 配点: 10, スペース: 6, 解答: '', 解説: '' }
         ],
     });
+    const isInternalUpdate = useRef(false);
+    const lastYamlProp = useRef(yamlProp);
+
+    // Parse incoming YAML and sync to form state
+    useEffect(() => {
+        if (!yamlProp || isInternalUpdate.current || yamlProp === lastYamlProp.current) {
+            isInternalUpdate.current = false;
+            return;
+        }
+        lastYamlProp.current = yamlProp;
+
+        try {
+            const parsed = yaml.load(yamlProp) as Partial<WorksheetData>;
+            if (parsed) {
+                setData({
+                    タイトル: parsed.タイトル || '演習プリント',
+                    サブタイトル: parsed.サブタイトル || '',
+                    解答を作成: parsed.解答を作成 ?? true,
+                    問題: (parsed.問題 || []).map(item => ({
+                        ...item,
+                        小問: Array.isArray(item.小問) ? item.小問.map(s => typeof s === 'string' ? s : String(s)) : undefined
+                    })),
+                });
+            }
+        } catch (e) {
+            // Ignore parse errors
+        }
+    }, [yamlProp]);
 
     const updateField = <K extends keyof WorksheetData>(field: K, value: WorksheetData[K]) => {
         setData(prev => {
@@ -105,8 +135,10 @@ export function WorksheetFormEditor({ onYamlChange, initialData }: WorksheetForm
     };
 
     const generateAndEmitYaml = (d: WorksheetData) => {
-        const yaml = generateYaml(d);
-        onYamlChange(yaml);
+        const generatedYaml = generateYaml(d);
+        isInternalUpdate.current = true;
+        lastYamlProp.current = generatedYaml;
+        onYamlChange(generatedYaml);
     };
 
     const generateYaml = (d: WorksheetData): string => {
