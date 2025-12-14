@@ -66,10 +66,8 @@ class ExamGenerator {
                 processEscapes: true,
                 packages: {'[+]': ['ams']},
                 macros: {
-                    leqq: '\\\\leqslant',
-                    geqq: '\\\\geqslant',
-                    lneqq: '\\\\lneqq',
-                    gneqq: '\\\\gneqq'
+                    leqq: ['\\\\mathrel{\\\\char"2266}', 0],
+                    geqq: ['\\\\mathrel{\\\\char"2267}', 0]
                 }
             },
             loader: {load: ['[tex]/ams']},
