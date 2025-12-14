@@ -107,6 +107,9 @@ class LessonPlanGenerator {
         .evaluation { background: #e8f5e9; padding: 12px; border-radius: 5px; border-left: 4px solid #4caf50; }
         .materials { background: #e3f2fd; padding: 12px; border-radius: 5px; border-left: 4px solid #2196f3; }
         .board-plan { background: #f5f5f5; padding: 12px; border-radius: 5px; border: 1px solid #ddd; white-space: pre-wrap; font-family: monospace; }
+        .board-table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+        .board-table th, .board-table td { border: 1px solid #333; padding: 10px; vertical-align: top; width: 33.3%; }
+        .board-table th { background: #f5f5dc; text-align: center; font-weight: bold; }
         .digital { background: #fff3e0; padding: 12px; border-radius: 5px; border-left: 4px solid #ff9800; }
         .considerations { background: #fce4ec; padding: 12px; border-radius: 5px; border-left: 4px solid #e91e63; }
         .students { background: #f3e5f5; padding: 12px; border-radius: 5px; border-left: 4px solid #9c27b0; }
@@ -324,9 +327,29 @@ class LessonPlanGenerator {
             return '';
         }
 
+        // オブジェクト形式（左側/中央/右側）の場合
+        if (typeof plan === 'object' && !Array.isArray(plan)) {
+            const planObj = plan as Record<string, string>;
+            return `
+    <h2>７　板書計画</h2>
+    <table class="board-table">
+        <tr>
+            <th>左側</th>
+            <th>中央</th>
+            <th>右側</th>
+        </tr>
+        <tr>
+            <td>${planObj.左側 || ''}</td>
+            <td>${planObj.中央 || ''}</td>
+            <td>${planObj.右側 || ''}</td>
+        </tr>
+    </table>`;
+        }
+
+        // 文字列形式の場合（後方互換）
         return `
     <h2>７　板書計画</h2>
-    <div class="section board-plan">${plan}</div>`;
+    <div class="section board-plan">${String(plan)}</div>`;
     }
 
     private createDigitalUsage(): string {

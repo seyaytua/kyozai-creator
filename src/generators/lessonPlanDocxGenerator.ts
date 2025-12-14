@@ -150,19 +150,74 @@ class LessonPlanDocxGenerator {
         // 板書計画
         if (d.板書計画) {
             children.push(this.createSectionHeading('７　板書計画'));
-            // 複数行を個別の段落として処理（等幅フォント風に表示）
-            const lines = String(d.板書計画).split('\n');
-            lines.forEach(line => {
-                children.push(new Paragraph({
-                    children: [new TextRun({
-                        text: line || ' ', // 空行も保持
-                        size: 20,
-                        font: 'Courier New', // 等幅フォント
-                    })],
-                    spacing: { after: 0, before: 0, line: 240 }, // 行間を詰める
+
+            const plan = d.板書計画;
+
+            // オブジェクト形式（左側/中央/右側）の場合：3列表として表示
+            if (typeof plan === 'object' && !Array.isArray(plan)) {
+                const planObj = plan as Record<string, string>;
+                children.push(new Table({
+                    width: { size: 100, type: WidthType.PERCENTAGE },
+                    borders: tableBorders,
+                    rows: [
+                        // ヘッダー行
+                        new TableRow({
+                            children: [
+                                new TableCell({
+                                    width: { size: 33, type: WidthType.PERCENTAGE },
+                                    shading: { type: ShadingType.SOLID, color: 'F5F5DC' },
+                                    children: [new Paragraph({
+                                        children: [new TextRun({ text: '左側', bold: true, size: 22 })],
+                                        alignment: AlignmentType.CENTER,
+                                    })],
+                                }),
+                                new TableCell({
+                                    width: { size: 34, type: WidthType.PERCENTAGE },
+                                    shading: { type: ShadingType.SOLID, color: 'F5F5DC' },
+                                    children: [new Paragraph({
+                                        children: [new TextRun({ text: '中央', bold: true, size: 22 })],
+                                        alignment: AlignmentType.CENTER,
+                                    })],
+                                }),
+                                new TableCell({
+                                    width: { size: 33, type: WidthType.PERCENTAGE },
+                                    shading: { type: ShadingType.SOLID, color: 'F5F5DC' },
+                                    children: [new Paragraph({
+                                        children: [new TextRun({ text: '右側', bold: true, size: 22 })],
+                                        alignment: AlignmentType.CENTER,
+                                    })],
+                                }),
+                            ],
+                        }),
+                        // 内容行
+                        new TableRow({
+                            children: [
+                                new TableCell({
+                                    children: [new Paragraph({
+                                        children: [new TextRun({ text: planObj.左側 || '', size: 22 })],
+                                    })],
+                                }),
+                                new TableCell({
+                                    children: [new Paragraph({
+                                        children: [new TextRun({ text: planObj.中央 || '', size: 22 })],
+                                    })],
+                                }),
+                                new TableCell({
+                                    children: [new Paragraph({
+                                        children: [new TextRun({ text: planObj.右側 || '', size: 22 })],
+                                    })],
+                                }),
+                            ],
+                        }),
+                    ],
                 }));
-            });
-            children.push(new Paragraph({ text: '', spacing: { after: 200 } }));
+            } else {
+                // 文字列形式の場合（後方互換）
+                children.push(new Paragraph({
+                    text: String(plan),
+                    spacing: { after: 200 },
+                }));
+            }
         }
 
         // デジタル教科書活用
