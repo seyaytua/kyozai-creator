@@ -6,7 +6,8 @@
 import {
     generateExamHtml as examGenerator,
     generateWorksheetHtml as worksheetGenerator,
-    generateLessonPlanHtml as lessonPlanGenerator
+    generateLessonPlanHtml as lessonPlanGenerator,
+    generateLessonPlanDocx as lessonPlanDocxGenerator
 } from '../generators';
 
 export interface GenerateResponse {
@@ -73,21 +74,27 @@ export async function generateLessonPlanHtml(yamlContent: string): Promise<Gener
 }
 
 export interface DocxResponse {
-    docx_base64: string;
+    blob?: Blob;
     success: boolean;
     error?: string;
 }
 
 /**
  * YAMLコンテンツから指導案Word文書を生成
- * TODO: docxライブラリを使って実装
  */
-export async function generateLessonPlanDocx(_yamlContent: string): Promise<DocxResponse> {
-    return {
-        docx_base64: '',
-        success: false,
-        error: 'Word出力機能は現在準備中です。HTML出力をご利用ください。',
-    };
+export async function generateLessonPlanDocx(yamlContent: string): Promise<DocxResponse> {
+    try {
+        const blob = await lessonPlanDocxGenerator(yamlContent);
+        return {
+            blob,
+            success: true,
+        };
+    } catch (error) {
+        return {
+            success: false,
+            error: error instanceof Error ? error.message : 'Unknown error',
+        };
+    }
 }
 
 /**
@@ -97,3 +104,4 @@ export async function generateLessonPlanDocx(_yamlContent: string): Promise<Docx
 export async function checkApiHealth(): Promise<boolean> {
     return true;
 }
+

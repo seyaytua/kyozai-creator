@@ -138,14 +138,8 @@ export function LessonPlanEditor() {
 
         const result = await generateLessonPlanDocx(yaml);
 
-        if (result.success && result.docx_base64) {
-            const binaryString = atob(result.docx_base64);
-            const bytes = new Uint8Array(binaryString.length);
-            for (let i = 0; i < binaryString.length; i++) {
-                bytes[i] = binaryString.charCodeAt(i);
-            }
-            const blob = new Blob([bytes], { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
-            const url = URL.createObjectURL(blob);
+        if (result.success && result.blob) {
+            const url = URL.createObjectURL(result.blob);
             const link = document.createElement('a');
             link.href = url;
             link.download = filename.replace('.yaml', '.docx');

@@ -12,6 +12,8 @@
     "deploy": "npm run build && npx gh-pages -d dist"
   },
   "dependencies": {
+    "docx": "^9.5.1",
+    "file-saver": "^2.0.5",
     "js-yaml": "^4.1.1",
     "marked": "^17.0.1",
     "react": "^19.2.0",
@@ -24,6 +26,7 @@
     "@codemirror/view": "^6.39.4",
     "@eslint/js": "^9.39.1",
     "@tailwindcss/vite": "^4.1.18",
+    "@types/file-saver": "^2.0.7",
     "@types/js-yaml": "^4.0.9",
     "@types/node": "^24.10.1",
     "@types/react": "^19.2.5",
