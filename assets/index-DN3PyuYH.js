@@ -783,18 +783,17 @@ Please report this to https://github.com/markedjs/marked.`,t){let i="<p>An error
     <div class="section">
         <strong>${e.単元名||""}</strong>
         （${e.使用教科書||""}）
-    </div>`}createGoals(){const e=this.data;return`
+    </div>`}createGoals(){const e=this.data;let n=e.本時の目標||e.目標||[];return n&&!Array.isArray(n)&&(n=Object.values(n)),`
     <h2>２　本時の目標</h2>
     <div class="section goals">
-        <ul>${(e.本時の目標||e.目標||[]).filter(r=>r).map(r=>`<li>${r}</li>`).join(`
+        <ul>${(Array.isArray(n)?n:[]).filter(s=>s).map(s=>`<li>${s}</li>`).join(`
 `)}</ul>
-    </div>`}createFlow(){const e=this.data,n=e.展開||e.授業展開||{};if(Object.keys(n).length===0)return"";let i="";for(const[r,s]of Object.entries(n)){if(!s)continue;const o=s.時間||"",u=[];for(const g of s.学習内容||[])g&&u.push(`<div class="activity"><span class="activity-content">○ ${g}</span></div>`);for(const g of s.学習活動||[])g&&u.push(`<div class="activity"><span class="activity-action">・ ${g}</span></div>`);const f=u.join(`
-`),p=(s.留意点||[]).filter(g=>g).map(g=>`・${g}`).join(`
-`);i+=`
+    </div>`}createFlow(){const e=this.data,n=e.展開||e.授業展開||{};if(Object.keys(n).length===0)return"";let i="";for(const[r,s]of Object.entries(n)){if(!s)continue;const o=s.時間||"",u=[],f=Array.isArray(s.学習内容)?s.学習内容:[];for(const b of f)b&&u.push(`<div class="activity"><span class="activity-content">○ ${b}</span></div>`);const d=Array.isArray(s.学習活動)?s.学習活動:[];for(const b of d)b&&u.push(`<div class="activity"><span class="activity-action">・ ${b}</span></div>`);const p=u.join(`
+`),x=(Array.isArray(s.留意点)?s.留意点:[]).filter(b=>b).map(b=>`・${b}`).join("<br>");i+=`
         <tr>
             <td>${r}<br>(${o}分)</td>
-            <td>${f}</td>
             <td>${p}</td>
+            <td>${x}</td>
         </tr>`}return`
     <h2>３　本時の展開</h2>
     <table class="flow-table">
@@ -804,12 +803,13 @@ Please report this to https://github.com/markedjs/marked.`,t){let i="<p>An error
             <th>指導上の留意点</th>
         </tr>
         ${i}
-    </table>`}createEvaluation(){const e=this.data,n=e.評価||e.本時の評価||[];return!n||n.length===0?"":`
+    </table>`}createEvaluation(){const e=this.data;let n=e.評価||e.本時の評価;if(!n)return"";let i="";return n&&typeof n=="object"&&!Array.isArray(n)?i=Object.entries(n).map(([s,o])=>`<li><strong>${s}：</strong>${o}</li>`).join(`
+`):Array.isArray(n)&&(i=n.filter(r=>r).map(r=>`<li>${typeof r=="object"&&r!==null&&"規準"in r?r.規準:String(r)}</li>`).join(`
+`)),i?`
     <h2>４　本時の評価</h2>
     <div class="section evaluation">
-        <ul>${n.filter(r=>r).map(r=>`<li>${typeof r=="object"&&r!==null&&"規準"in r?r.規準:String(r)}</li>`).join(`
-`)}</ul>
-    </div>`}}function xH(t){return new yH(t).generateHtml()}async function bH(t){try{return{html:pH(t),success:!0}}catch(e){return{html:"",success:!1,error:e instanceof Error?e.message:"Unknown error"}}}async function vH(t){try{return{html:gH(t),success:!0}}catch(e){return{html:"",success:!1,error:e instanceof Error?e.message:"Unknown error"}}}async function SH(t){try{return{html:xH(t),success:!0}}catch(e){return{html:"",success:!1,error:e instanceof Error?e.message:"Unknown error"}}}async function wH(t){return{docx_base64:"",success:!1,error:"Word出力機能は現在準備中です。HTML出力をご利用ください。"}}async function Zy(){return!0}function Jy({hasChanges:t,message:e="データが保存されていません。ページを離れてもよろしいですか？"}){const n=h3(({currentLocation:i,nextLocation:r})=>t&&i.pathname!==r.pathname);return L.useEffect(()=>{const i=r=>{if(t)return r.preventDefault(),r.returnValue=e,e};return window.addEventListener("beforeunload",i),()=>window.removeEventListener("beforeunload",i)},[t,e]),n}function ex({blocker:t,onSave:e}){if(t.state!=="blocked")return null;const n=()=>{e&&e(),t.proceed()};return v.jsx("div",{className:"fixed inset-0 bg-black/50 flex items-center justify-center z-50",children:v.jsxs("div",{className:"bg-[var(--color-surface)] rounded-2xl shadow-2xl w-[400px] p-6",children:[v.jsx("h2",{className:"text-lg font-semibold mb-3",children:"⚠️ 未保存のデータがあります"}),v.jsx("p",{className:"text-[var(--color-text-muted)] mb-6",children:"このページを離れると、編集中のデータが失われます。"}),v.jsxs("div",{className:"flex justify-end gap-3",children:[v.jsx("button",{onClick:()=>t.reset(),className:"px-4 py-2 rounded-lg bg-[var(--color-surface-hover)] hover:bg-[var(--color-border)] transition-colors",children:"キャンセル"}),e&&v.jsx("button",{onClick:n,className:"px-4 py-2 rounded-lg bg-green-600 text-white hover:bg-green-700 transition-colors",children:"保存して移動"}),v.jsx("button",{onClick:()=>t.proceed(),className:"px-4 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700 transition-colors",children:"保存せずに移動"})]})]})})}const Bf=`タイトル: ""
+        <ul>${i}</ul>
+    </div>`:""}}function xH(t){return new yH(t).generateHtml()}async function bH(t){try{return{html:pH(t),success:!0}}catch(e){return{html:"",success:!1,error:e instanceof Error?e.message:"Unknown error"}}}async function vH(t){try{return{html:gH(t),success:!0}}catch(e){return{html:"",success:!1,error:e instanceof Error?e.message:"Unknown error"}}}async function SH(t){try{return{html:xH(t),success:!0}}catch(e){return{html:"",success:!1,error:e instanceof Error?e.message:"Unknown error"}}}async function wH(t){return{docx_base64:"",success:!1,error:"Word出力機能は現在準備中です。HTML出力をご利用ください。"}}async function Zy(){return!0}function Jy({hasChanges:t,message:e="データが保存されていません。ページを離れてもよろしいですか？"}){const n=h3(({currentLocation:i,nextLocation:r})=>t&&i.pathname!==r.pathname);return L.useEffect(()=>{const i=r=>{if(t)return r.preventDefault(),r.returnValue=e,e};return window.addEventListener("beforeunload",i),()=>window.removeEventListener("beforeunload",i)},[t,e]),n}function ex({blocker:t,onSave:e}){if(t.state!=="blocked")return null;const n=()=>{e&&e(),t.proceed()};return v.jsx("div",{className:"fixed inset-0 bg-black/50 flex items-center justify-center z-50",children:v.jsxs("div",{className:"bg-[var(--color-surface)] rounded-2xl shadow-2xl w-[400px] p-6",children:[v.jsx("h2",{className:"text-lg font-semibold mb-3",children:"⚠️ 未保存のデータがあります"}),v.jsx("p",{className:"text-[var(--color-text-muted)] mb-6",children:"このページを離れると、編集中のデータが失われます。"}),v.jsxs("div",{className:"flex justify-end gap-3",children:[v.jsx("button",{onClick:()=>t.reset(),className:"px-4 py-2 rounded-lg bg-[var(--color-surface-hover)] hover:bg-[var(--color-border)] transition-colors",children:"キャンセル"}),e&&v.jsx("button",{onClick:n,className:"px-4 py-2 rounded-lg bg-green-600 text-white hover:bg-green-700 transition-colors",children:"保存して移動"}),v.jsx("button",{onClick:()=>t.proceed(),className:"px-4 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700 transition-colors",children:"保存せずに移動"})]})]})})}const Bf=`タイトル: ""
 科目: ""
 学校名: ""
 試験時間: 50
