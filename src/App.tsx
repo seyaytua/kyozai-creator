@@ -1,8 +1,9 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createHashRouter, RouterProvider } from 'react-router-dom';
 import { MainLayout } from './components/Layout';
 import { Home, ExamEditor, WorksheetEditor, LessonPlanEditor, Settings } from './pages';
 
-const router = createBrowserRouter([
+// GitHub PagesではHashRouterを使用（クライアントサイドルーティング用）
+const router = createHashRouter([
   {
     path: "/",
     element: <MainLayout />,
@@ -45,5 +46,3 @@ function App() {
 }
 
 export default App;
-
-
